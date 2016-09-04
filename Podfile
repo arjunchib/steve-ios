@@ -4,5 +4,7 @@ use_frameworks!
 
 target 'STEVE' do
   pod 'SnapKit'
+  pod 'AlamofireImage', '~> 2.0'
+  pod 'SKInnerShadowLayer', '~> 1.1'
 end
 
