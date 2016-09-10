@@ -32,8 +32,6 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
         videoPlayerFrameView.clipsToBounds = true
         videoPlayerFrameView.layer.cornerRadius = 8.0
         
-        videoPlayerView.image = UIImage(named: "hello")
-        
         steveTag.font = UIFont(name: "Arista 2.0", size: 24.0)
         steveTag.textColor = Color.whiteSmoke
         
@@ -87,8 +85,20 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
         super.viewDidLoad()
         
         let url = "http://143.215.108.131:8080/stream/video.mjpeg"
-        Alamofire.request(.GET, url).response { (request, response, data, error) in
-            self.videoPlayerView.image = UIImage(data: data!, scale: 1.0)
+        let imageData = NSMutableData()
+        let startData = String("ffd8").dataFromHexadecimalString()
+        
+        let request = Alamofire.request(.GET, url)
+        request.stream { data in
+            let subData = data.subdataWithRange(NSMakeRange(0, 2))
+            if subData.isEqualToData(startData!) {
+                let image = UIImage(data: imageData)
+                imageData.length = 0
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.videoPlayerView.image = image
+                }
+            }
+            imageData.appendData(data)
         }
     }
 
@@ -96,7 +106,6 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 
