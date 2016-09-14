@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Alamofire
 import SKInnerShadowLayer
+import SocketIO
 
 class ViewController: UIViewController, NSURLConnectionDelegate {
     let gradient = CAGradientLayer()
@@ -84,6 +85,22 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let socket = SocketIOClient(socketURL: NSURL(string: "143.215.104.197:8006")!, config: [.Log(true), .ForcePolling(true)])
+        
+        socket.on("connect") {data, ack in
+            print("socket connected")
+            socket.emit("100 -100")
+        }
+        
+        socket.connect()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func startVideoStream() {
         let url = "http://143.215.108.131:8080/stream/video.mjpeg"
         let imageData = NSMutableData()
         let startData = String("ffd8").dataFromHexadecimalString()
@@ -100,11 +117,6 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
             }
             imageData.appendData(data)
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 }
