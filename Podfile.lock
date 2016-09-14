@@ -1,16 +1,22 @@
 PODS:
-  - Alamofire (3.4.2)
+  - Alamofire (4.0.0)
+  - AlamofireImage (3.0.0):
+    - Alamofire (~> 4.0)
   - SKInnerShadowLayer (1.1)
-  - SnapKit (0.22.0)
+  - SnapKit (3.0.0)
+  - Socket.IO-Client-Swift (8.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.4)
-  - SKInnerShadowLayer (~> 1.1)
+  - AlamofireImage
+  - SKInnerShadowLayer
   - SnapKit
+  - Socket.IO-Client-Swift
 
 SPEC CHECKSUMS:
-  Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
+  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  AlamofireImage: 6594aa1139a67dcd36cde6da79ea4e5b318e60fb
   SKInnerShadowLayer: 2343521c0a33db86e86e2d18ca01bbc0291f1e54
-  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
+  SnapKit: 98af0a4e9369d3c58f758967518081dbdc7eb1d9
+  Socket.IO-Client-Swift: b5f6c274ad849b2b73717546dcf29d48ead707eb
 
 COCOAPODS: 0.39.0
