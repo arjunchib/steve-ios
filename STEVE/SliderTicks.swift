@@ -36,7 +36,7 @@ class SliderTicks: UIView {
         let height = bounds.size.height - 3.0
         
         for i in 0..<numTicks {
-            ticks[i].snp_makeConstraints(closure: { (make) in
+            ticks[i].snp.makeConstraints({ (make) in
                 make.width.equalTo(self)
                 make.height.equalTo(3.0)
                 make.top.equalTo(CGFloat(i) * (height / CGFloat(numTicks - 1)))

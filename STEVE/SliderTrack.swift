@@ -29,7 +29,7 @@ class SliderTrack: UIView {
     
     func layout() {
         // Make Constraints
-        inlet.snp_makeConstraints { (make) in
+        inlet.snp.makeConstraints { (make) in
             make.edges.equalTo(self).inset(4.0)
         }
         
@@ -39,17 +39,17 @@ class SliderTrack: UIView {
         innerShadow.frame = bounds
         innerShadow.innerShadowOffset = CGSize(width: 0, height: 1)
         innerShadow.innerShadowRadius = 1.0
-        innerShadow.innerShadowColor = Color.black.CGColor
+        innerShadow.innerShadowColor = Color.black.cgColor
         innerShadow.innerShadowOpacity = 0.75
-        layer.insertSublayer(innerShadow, atIndex: 0)
+        layer.insertSublayer(innerShadow, at: 0)
         
         let inletInnerShadow = SKInnerShadowLayer()
         inlet.layoutIfNeeded()
         inletInnerShadow.frame = inlet.bounds
         inletInnerShadow.innerShadowOffset = CGSize(width: 0, height: 1)
         inletInnerShadow.innerShadowRadius = 5.0
-        inletInnerShadow.innerShadowColor = Color.black.CGColor
+        inletInnerShadow.innerShadowColor = Color.black.cgColor
         inletInnerShadow.innerShadowOpacity = 0.75
-        inlet.layer.insertSublayer(inletInnerShadow, atIndex: 0)
+        inlet.layer.insertSublayer(inletInnerShadow, at: 0)
     }
 }

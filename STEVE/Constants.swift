@@ -8,8 +8,8 @@
 
 import UIKit
 
-let screenwidth = UIScreen.mainScreen().bounds.width
-let screenheight = UIScreen.mainScreen().bounds.width
+let screenwidth = UIScreen.main.bounds.width
+let screenheight = UIScreen.main.bounds.width
 
 struct Color {
     static let balticSea =  UIColor(red:0.24, green:0.24, blue:0.24, alpha:1.00)

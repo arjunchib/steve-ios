@@ -39,33 +39,33 @@ class Slider: UIView {
     override func didMoveToSuperview() {
         
         // Make Constraints
-        snp_makeConstraints { (make) in
+        snp.makeConstraints { (make) in
             make.width.equalTo(50.0)
             make.height.equalTo(220.0)
         }
         
-        track.snp_makeConstraints { (make) in
+        track.snp.makeConstraints { (make) in
             make.width.equalTo(13.0)
             make.top.equalTo(23.0)
             make.bottom.equalTo(-23.0)
             make.centerX.equalTo(self)
         }
         
-        knob.snp_makeConstraints { (make) in
+        knob.snp.makeConstraints { (make) in
             make.width.equalTo(self)
             make.height.equalTo(45.0)
             make.centerX.equalTo(self)
             make.centerY.equalTo(self)
         }
         
-        ticks.snp_makeConstraints { (make) in
+        ticks.snp.makeConstraints { (make) in
             make.width.equalTo(22.0)
             make.top.equalTo(23.0)
             make.bottom.equalTo(-23.0)
             if (ticksSide == .Left) {
-                make.right.equalTo(track.snp_left).offset(-35.0)
+                make.right.equalTo(track.snp.left).offset(-35.0)
             } else {
-                make.left.equalTo(track.snp_right).offset(35.0)
+                make.left.equalTo(track.snp.right).offset(35.0)
             }
         }
         
@@ -75,13 +75,13 @@ class Slider: UIView {
     }
     
     func handlePanGesture(panGesture: UIPanGestureRecognizer) {
-        let translation = panGesture.translationInView(self)
-        panGesture.setTranslation(CGPointZero, inView: self)
+        let translation = panGesture.translation(in: self)
+        panGesture.setTranslation(CGPoint(x: 0, y: 0), in: self)
         
         knob.layoutIfNeeded()
         let newYPos = knob.frame.origin.y + translation.y
         if (newYPos >= bounds.origin.y - knob.frame.height/2 + 23.0 && newYPos < bounds.origin.y + bounds.size.height - knob.frame.height/2 - 23.0) {
-            knob.frame = CGRectMake(knob.frame.origin.x, newYPos, knob.frame.size.width, knob.frame.size.height)
+            knob.frame = CGRect(x: knob.frame.origin.x, y: newYPos, width: knob.frame.size.width, height: knob.frame.size.height)
         }
     }
 }

@@ -26,8 +26,8 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
         
         // Styles
         gradient.frame = view.bounds
-        gradient.colors = [Color.desertStorm.CGColor, Color.white.CGColor]
-        view.layer.insertSublayer(gradient, atIndex: 0)
+        gradient.colors = [Color.desertStorm.cgColor, Color.white.cgColor]
+        view.layer.insertSublayer(gradient, at: 0)
         
         videoPlayerFrameView.backgroundColor = Color.balticSea
         videoPlayerFrameView.clipsToBounds = true
@@ -47,28 +47,28 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
         view.addSubview(sliderRight)
         
         // Make Constraints
-        videoPlayerFrameView.snp_makeConstraints { (make) in
+        videoPlayerFrameView.snp.makeConstraints { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
             make.top.equalTo(10)
             make.height.equalTo((screenwidth - 20) / 1.5 + 32)
         }
         
-        videoPlayerView.snp_makeConstraints { (make) in
+        videoPlayerView.snp.makeConstraints { (make) in
             make.left.equalTo(10)
             make.right.equalTo(-10)
             make.top.equalTo(10)
             make.height.equalTo((screenwidth - 40) / 1.5)
         }
         
-        sliderLeft.snp_makeConstraints { (make) in
+        sliderLeft.snp.makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-60.0)
-            make.top.equalTo(videoPlayerFrameView.snp_bottom).offset(15.0)
+            make.top.equalTo(videoPlayerFrameView.snp.bottom).offset(15.0)
         }
         
-        sliderRight.snp_makeConstraints { (make) in
+        sliderRight.snp.makeConstraints { (make) in
             make.centerX.equalTo(view).offset(60.0)
-            make.top.equalTo(videoPlayerFrameView.snp_bottom).offset(15.0)
+            make.top.equalTo(videoPlayerFrameView.snp.bottom).offset(15.0)
         }
         
         // Inner Shadows
@@ -77,15 +77,15 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
         innerShadow.frame = videoPlayerFrameView.bounds
         innerShadow.innerShadowOffset = CGSize(width: 0, height: 1)
         innerShadow.innerShadowRadius = 5.0
-        innerShadow.innerShadowColor = Color.black.CGColor
+        innerShadow.innerShadowColor = Color.black.cgColor
         innerShadow.innerShadowOpacity = 0.75
-        videoPlayerFrameView.layer.insertSublayer(innerShadow, atIndex: 0)
+        videoPlayerFrameView.layer.insertSublayer(innerShadow, at: 0)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let socket = SocketIOClient(socketURL: NSURL(string: "143.215.104.197:8006")!, config: [.Log(true), .ForcePolling(true)])
+        let socket = SocketIOClient(socketURL: URL(string: "http://143.215.104.197:8006")!)
         
         socket.on("connect") {data, ack in
             print("socket connected")
@@ -105,17 +105,17 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
         let imageData = NSMutableData()
         let startData = String("ffd8").dataFromHexadecimalString()
         
-        let request = Alamofire.request(.GET, url)
+        let request = Alamofire.request(url)
         request.stream { data in
-            let subData = data.subdataWithRange(NSMakeRange(0, 2))
-            if subData.isEqualToData(startData!) {
-                let image = UIImage(data: imageData)
+            let subData = data.subdata(in: Range(uncheckedBounds: (lower: 0, upper: 2)))
+            if subData == startData {
+                let image = UIImage(data: imageData as Data)
                 imageData.length = 0
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async() {
                     self.videoPlayerView.image = image
                 }
             }
-            imageData.appendData(data)
+            imageData.append(data)
         }
     }
 

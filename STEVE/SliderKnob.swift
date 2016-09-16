@@ -16,7 +16,7 @@ class SliderKnob: UIView {
         super.init(frame: frame)
         
         // Styles
-        layer.shadowColor = Color.black.CGColor
+        layer.shadowColor = Color.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowRadius = 2.0
         layer.shadowOpacity = 0.75
@@ -26,7 +26,7 @@ class SliderKnob: UIView {
         body.layer.masksToBounds = true
         
         ridge.backgroundColor = Color.whiteSmoke
-        ridge.layer.shadowColor = Color.black.CGColor
+        ridge.layer.shadowColor = Color.black.cgColor
         ridge.layer.shadowOffset = CGSize(width: 0, height: 1)
         ridge.layer.shadowRadius = 2.0
         ridge.layer.shadowOpacity = 0.75
@@ -43,11 +43,11 @@ class SliderKnob: UIView {
     func layout() {
         
         // Make Constraints
-        body.snp_makeConstraints { (make) in
+        body.snp.makeConstraints { (make) in
             make.edges.equalTo(self).inset(10.0)
         }
         
-        ridge.snp_makeConstraints { (make) in
+        ridge.snp.makeConstraints { (make) in
             make.centerY.equalTo(self)
             make.height.equalTo(6)
             make.right.equalTo(0)
@@ -56,7 +56,7 @@ class SliderKnob: UIView {
         
         // Shadows
         self.layoutIfNeeded()
-        layer.shadowPath = UIBezierPath(roundedRect: body.bounds, cornerRadius: 2.0).CGPath
+        layer.shadowPath = UIBezierPath(roundedRect: body.bounds, cornerRadius: 2.0).cgPath
         layer.shadowOffset = CGSize(width: 10.0, height: 10.0)
     }
 }
