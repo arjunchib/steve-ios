@@ -13,8 +13,10 @@ import SKInnerShadowLayer
 import SocketIO
 
 class ViewController: UIViewController, NSURLConnectionDelegate {
-    let gradient = CAGradientLayer()
     
+    let socket = SocketIOClient(socketURL: URL(string: "http://143.215.104.197:8006")!, config: [.log(false), .forceWebsockets(true)])
+    
+    let gradient = CAGradientLayer()
     let videoPlayerFrameView = UIView()
     let videoPlayerView = UIImageView()
     let steveTag = UILabel()
@@ -85,19 +87,18 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let socket = SocketIOClient(socketURL: URL(string: "http://143.215.104.197:8006")!)
-        
         socket.on("connect") {data, ack in
             print("socket connected")
-            socket.emit("100 -100")
         }
         
         socket.connect()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func updateMotors() {
+        print(sliderLeft.value, sliderRight.value)
+        let left = sliderLeft.value * -2 + 100
+        let right = sliderRight.value * -2 + 100
+        self.socket.emit("move", ["left" : left, "right" : right])
     }
     
     func startVideoStream() {
@@ -118,6 +119,10 @@ class ViewController: UIViewController, NSURLConnectionDelegate {
             imageData.append(data)
         }
     }
-
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }
 

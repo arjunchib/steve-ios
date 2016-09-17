@@ -18,6 +18,7 @@ class Slider: UIView {
     let knob = SliderKnob()
     let ticks = SliderTicks()
     var ticksSide = TicksSide.Left
+    var value = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,6 +83,12 @@ class Slider: UIView {
         let newYPos = knob.frame.origin.y + translation.y
         if (newYPos >= bounds.origin.y - knob.frame.height/2 + 23.0 && newYPos < bounds.origin.y + bounds.size.height - knob.frame.height/2 - 23.0) {
             knob.frame = CGRect(x: knob.frame.origin.x, y: newYPos, width: knob.frame.size.width, height: knob.frame.size.height)
+            value = Int(newYPos / (bounds.size.height - 46.0) * 100)
+            
+            // trigger send steve data
+            let appDelegate  = UIApplication.shared.delegate as! AppDelegate
+            let viewController = appDelegate.window!.rootViewController as! ViewController
+            viewController.updateMotors()
         }
     }
 }
